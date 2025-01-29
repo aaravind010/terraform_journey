@@ -89,15 +89,46 @@ resource "aws_route_table_association" "private_rt_1_association" {
   subnet_id      = aws_subnet.arima_private_subnet_1.id
 }
 
+
+resource "aws_security_group" "terra_inst_SG" {
+  vpc_id = aws_vpc.arima_vpc.id
+
+  ingress {
+    description = "SSH Incoming"
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 22
+    to_port     = 22
+    protocol = "tcp"
+  }
+
+  ingress {
+    description = "Port 80"
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 80
+    to_port     = 80
+    protocol = "tcp"
+  }
+
+  egress {
+    description = "Outbond traffic"
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol = "-1"
+  }
+}
+
 resource "aws_key_pair" "terra" {
   public_key = file("terra.pub")
-  key_name   = "terra-ssh-key"
+  key_name   = "terra"
 }
 
 resource "aws_instance" "tera_inst" {
-  instance_type = var.ec2_instance_type["pub"]
-  subnet_id     = aws_subnet.arima_public_subnet_1.id
-  ami           = var.ec2_ami_type["pub"]
+  instance_type   = var.ec2_instance_type["pub"]
+  subnet_id       = aws_subnet.arima_public_subnet_1.id
+  ami             = var.ec2_ami_type["pub"]
+  key_name        = aws_key_pair.terra.key_name
+  security_groups = [aws_security_group.terra_inst_SG.id]
 
   connection {
     host        = self.public_ip

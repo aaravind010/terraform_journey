@@ -27,7 +27,7 @@ variable "arima_public_azs" {
   type        = map(string)
   default = {
     "pub_1" = "us-east-1a"
-    "pub_2" = "us-east-2a"
+    "pub_2" = "us-east-1b"
   }
 }
 
