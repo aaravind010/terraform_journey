@@ -5,3 +5,7 @@ resource "aws_internet_gateway" "aws_igw" {
     Name = "AWS IGW"
   }
 }
+
+output "aws_igw_id" {
+  value = aws_internet_gateway.aws_igw.id
+}

@@ -1,5 +1,9 @@
+module "vpc_id" {
+  source = "../vpc"
+}
+
 resource "aws_security_group" "alb_sg" {
-  vpc_id = aws_vpc.t_vpc.id
+  vpc_id = module.vpc_id.vpc_id
   ingress {
     description = "Port 80"
     protocol = "tcp"
@@ -67,4 +71,16 @@ resource "aws_security_group" "rds_sg" {
   tags = {
     Name = "RDS SG"
   }
+}
+
+output "alb_sg_id" {
+  value = aws_security_group.alb_sg.id
+}
+
+output "bastion_sg_id" {
+  value = aws_security_group.bastion_sg.id
+}
+
+output "rds_sg_id" {
+  value = aws_security_group.rds_sg.id
 }

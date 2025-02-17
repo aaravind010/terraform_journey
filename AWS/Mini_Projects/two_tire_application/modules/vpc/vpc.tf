@@ -3,3 +3,7 @@ resource "aws_vpc" "t_vpc" {
   enable_dns_hostnames = true
   tags = var.VPC_Tags
 }
+
+output "vpc_id" {
+  value = aws_vpc.t_vpc.id
+}

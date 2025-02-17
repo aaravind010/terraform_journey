@@ -1,9 +1,21 @@
+module "subnet" {
+  source = "../subnet"
+}
+
+module "key_pair" {
+  source = "../key_pair"
+}
+
+module "ec2_sg" {
+  source = "../securitygroup"
+}
+
 resource "aws_instance" "bastion_web" {
   ami = var.ec2_ami_type["pub"]
   instance_type = var.ec2_instance_type["pub"]
-  subnet_id = aws_subnet.public_subnet_1.id
-  key_name = aws_key_pair.terra.terra
-  security_groups = [ aws_security_group.bastion_sg.id ]
+  subnet_id = module.subnet.public_subnet_1_id
+  key_name = module.key_pair.key_pair
+  security_groups = [ module.ec2_sg.bastion_sg_id ]
 
   tags = {
     Name = "Bastion web server"
@@ -14,7 +26,7 @@ resource "aws_instance" "bastion_web" {
     user = "ec2-user"
     port = 22
     type = "ssh"
-    private_key = file("terra")
+    private_key = file("/workspaces/terraform_journey/AWS/Mini_Projects/two_tire_application/modules/ec2/terra")
   }
 
   provisioner "remote-exec" {
@@ -35,9 +47,9 @@ resource "aws_instance" "bastion_web" {
 resource "aws_instance" "bastion_web_2" {
   ami = var.ec2_ami_type["pub"]
   instance_type = var.ec2_instance_type["pub"]
-  subnet_id = aws_subnet.public_subnet_2.id
-  key_name = aws_key_pair.terra.terra
-  security_groups = [ aws_security_group.bastion_sg.id ]
+  subnet_id = module.subnet.public_subnet_2_id
+  key_name = module.key_pair.key_pair
+  security_groups = [ module.ec2_sg.bastion_sg_id ]
 
   tags = {
     Name = "Bastion web server"
