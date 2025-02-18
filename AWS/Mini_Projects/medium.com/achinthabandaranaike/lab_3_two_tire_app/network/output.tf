@@ -41,3 +41,7 @@ output "pri_rt_2_id" {
 output "db_subnet_group_name" {
   value = aws_db_subnet_group.db_subnet_group.name
 }
+
+output "lb_endpoint" {
+  value = aws_lb.pub_alb.dns_name
+}

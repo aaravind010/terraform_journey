@@ -68,7 +68,7 @@ resource "aws_eip" "eip" {
 
 # NAT GATEWAY
 resource "aws_nat_gateway" "ngw" {
-  subnet_id = aws_subnet.pub_sub_1.id
+  subnet_id     = aws_subnet.pub_sub_1.id
   allocation_id = aws_eip.eip.allocation_id
 }
 
@@ -159,7 +159,13 @@ resource "aws_lb_target_group" "pub_alb_tg_1" {
 
 resource "aws_lb_target_group_attachment" "pub_alb_tg_1_att" {
   target_group_arn = aws_lb_target_group.pub_alb_tg_1.arn
-  target_id        = var.instance_id
+  target_id        = var.instance_id_web_1
+  port             = 80
+}
+
+resource "aws_alb_target_group_attachment" "pub_alb_tg_2_att" {
+  target_group_arn = aws_lb_target_group.pub_alb_tg_1.arn
+  target_id        = var.instance_id_web_2
   port             = 80
 }
 

@@ -9,3 +9,7 @@ output "web_2_public_ip" {
 output "db_endpoint" {
   value = module.db.endpoint
 }
+
+output "lb_endpoint" {
+  value = module.vpc.lb_endpoint
+}

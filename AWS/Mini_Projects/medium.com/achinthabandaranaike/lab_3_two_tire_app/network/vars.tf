@@ -26,6 +26,10 @@ variable "alb_sg_id" {
   type = string
 }
 
-variable "instance_id" {
+variable "instance_id_web_1" {
+  type = string
+}
+
+variable "instance_id_web_2" {
   type = string
 }

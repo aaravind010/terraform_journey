@@ -1,8 +1,9 @@
 module "vpc" {
-  source      = "./network"
-  vpc_id      = module.vpc.vpc_id
-  alb_sg_id   = module.sg.alb_sg_id
-  instance_id = module.ec2.instance_id
+  source            = "./network"
+  vpc_id            = module.vpc.vpc_id
+  alb_sg_id         = module.sg.alb_sg_id
+  instance_id_web_1 = module.ec2.instance_id_web_1
+  instance_id_web_2 = module.ec2.instance_id_web_2
 }
 
 module "sg" {

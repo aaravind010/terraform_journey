@@ -1,5 +1,9 @@
-output "instance_id" {
+output "instance_id_web_1" {
   value = aws_instance.web_1.id
+}
+
+output "instance_id_web_2" {
+  value = aws_instance.web_2.id
 }
 
 output "web_1_pubic_ip" {
