@@ -21,3 +21,11 @@ variable "pri_subnet" {
     "pri_sub_2" = "192.168.4.0/24"
   }
 }
+
+variable "alb_sg_id" {
+  type = string
+}
+
+variable "instance_id" {
+  type = string
+}
